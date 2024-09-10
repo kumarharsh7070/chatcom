@@ -1,10 +1,13 @@
 import 'package:firebase/first_home.dart';
+import 'package:firebase/gmail_auth.dart';
+import 'package:firebase/gmail_forgot.dart';
 import 'package:firebase/homeone.dart';
 import 'package:firebase/otp_auth.dart';
+import 'package:firebase/otp_auth2.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
- 
-void main() async { 
+
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
       options: FirebaseOptions(
@@ -23,15 +26,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-     debugShowCheckedModeBanner: false,
-    //  home: firsthome(),
-     initialRoute: '/',
-  routes: {
-    '/': (context) => firsthome(),
-    '/secondone': (context) => secondone(),
+      debugShowCheckedModeBanner: false,
+      //  home: firsthome(),
+      initialRoute: '/gmail_auth',
+      routes: {
+        '/': (context) => firsthome(),
+        '/secondone': (context) => secondone(),
         '/phone_auth': (context) => phone_auth(),
-
-  },
+        '/phone_auth2': (context) => phone_auth2(),
+         '/gmail_auth': (context) => gmail_auth(),
+         '/gmail_forget':(context) => gmail_forgot()
+      },
     );
   }
 }

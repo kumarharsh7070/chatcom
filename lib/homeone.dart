@@ -194,7 +194,9 @@ class _secondoneState extends State<secondone> {
                             backgroundColor: Colors.white
                             // foreground
                             ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/gmail_auth');
+                        },
                         child: SizedBox(
                             width: 390,
                             child: Center(
@@ -213,7 +215,12 @@ class _secondoneState extends State<secondone> {
                           Text('Existing account?'),
                           TextButton(
                             onPressed: () {},
-                            child: Text('Log in',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black),),
+                            child: Text(
+                              'Log in',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black),
+                            ),
                           )
                         ],
                       )

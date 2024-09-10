@@ -47,7 +47,7 @@ class _firsthomeState extends State<firsthome> {
             icon: const Icon(Icons.connect_without_contact_sharp, size: 35,color: Colors.white,),
             label: Text(''),
             onPressed: () {
-             Navigator.pushNamed(context, '/Homeone');
+             Navigator.pushNamed(context, '/secondone');
             },
             
             style: ElevatedButton.styleFrom(
