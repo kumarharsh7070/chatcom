@@ -1,9 +1,10 @@
 import 'package:firebase/first_home.dart';
 import 'package:firebase/gmail_auth.dart';
 import 'package:firebase/gmail_forgot.dart';
+import 'package:firebase/gmail_register.dart';
 import 'package:firebase/homeone.dart';
 import 'package:firebase/otp_auth.dart';
-import 'package:firebase/otp_auth2.dart';
+import 'package:firebase/phone_auth2.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -34,10 +35,10 @@ class MyApp extends StatelessWidget {
         '/secondone': (context) => secondone(),
         '/phone_auth': (context) => phone_auth(),
         '/phone_auth2': (context) => phone_auth2(),
-         '/gmail_auth': (context) => gmail_auth(),
-         '/gmail_forget':(context) => gmail_forgot()
+        '/gmail_auth': (context) => gmail_auth(),
+        '/gmail_register': (context) => gmail_register(),
+        '/gmail_forgot': (context) => gmail_forgot(),
       },
     );
   }
 }
-
