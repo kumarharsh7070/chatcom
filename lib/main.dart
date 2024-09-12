@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       //  home: firsthome(),
-      initialRoute: '/phone_auth2',
+      initialRoute: '/gmail_auth',
       routes: {
         '/': (context) => firsthome(),
         '/secondone': (context) => secondone(),
