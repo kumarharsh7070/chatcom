@@ -1,3 +1,4 @@
+import 'package:firebase/chat_screen/chat_home.dart';
 import 'package:firebase/first_home.dart';
 import 'package:firebase/gmail_auth.dart';
 import 'package:firebase/gmail_forgot.dart';
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       //  home: firsthome(),
-      initialRoute: '/gmail_register',
+      initialRoute: '/chat_home',
       routes: {
         '/': (context) => firsthome(),
         '/secondone': (context) => secondone(),
@@ -38,8 +39,8 @@ class MyApp extends StatelessWidget {
         '/phone_auth2': (context) => phone_auth2(),
         '/gmail_auth': (context) => gmail_auth(),
         '/gmail_forgot': (context) => gmail_forgot(),
-        '/gmail_register':(context)=> gmail_register()
-
+        '/gmail_register':(context)=> gmail_register(),
+         '/chat_home':(context)=>chat_home()
       },
     );
   }
