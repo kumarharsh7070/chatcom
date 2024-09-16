@@ -1,3 +1,4 @@
+import 'package:firebase/Pages/ChatPage1.dart';
 import 'package:firebase/chat_screen/chat_home.dart';
 import 'package:firebase/first_home.dart';
 import 'package:firebase/gmail_auth.dart';
@@ -40,7 +41,9 @@ class MyApp extends StatelessWidget {
         '/gmail_auth': (context) => gmail_auth(),
         '/gmail_forgot': (context) => gmail_forgot(),
         '/gmail_register':(context)=> gmail_register(),
-         '/chat_home':(context)=>chat_home()
+         '/chat_home':(context)=>chat_home(),
+          '/ChatPage':(context)=> ChatPage(),
+
       },
     );
   }
