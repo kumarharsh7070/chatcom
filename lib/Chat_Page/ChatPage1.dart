@@ -1,4 +1,4 @@
-import 'package:firebase/CustomUI/CustomCard.dart';
+import 'package:firebase/Chat_CustomUI/CustomCard.dart';
 import 'package:flutter/material.dart';
 
 class ChatPage extends StatefulWidget {
