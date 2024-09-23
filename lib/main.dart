@@ -1,4 +1,4 @@
-import 'package:firebase/Pages/ChatPage1.dart';
+import 'package:firebase/Chat_Pages/Message_Page.dart';
 import 'package:firebase/chat_screen/chat_home.dart';
 import 'package:firebase/first_home.dart';
 import 'package:firebase/gmail_auth.dart';
