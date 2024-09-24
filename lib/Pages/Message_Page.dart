@@ -1,9 +1,10 @@
 // import 'package:firebase/Chat_CustomUI/CustomCard.dart';
+import 'package:firebase/Pages/Chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 // ignore: must_be_immutable
-class ChatPage extends StatelessWidget {
+class MessagePage extends StatelessWidget {
   List images = [
     "images/undraw.jpeg",
     "images/undraw1.png",
@@ -93,7 +94,6 @@ class ChatPage extends StatelessWidget {
                   PopupMenuButton(
                     onSelected: (selected) {
                       if (selected == 5) {
-                        // Navigator.push(context, MaterialPageRoute(builder: (context) => settingscreen()))
                       }
                     },
                     elevation: 10,
@@ -174,7 +174,12 @@ class ChatPage extends StatelessWidget {
                 return Padding(
                   padding: EdgeInsets.symmetric(vertical: 5),
                   child: ListTile(
-                    onTap: () {},
+                    onTap: () {
+              Navigator.push(context, 
+              MaterialPageRoute(
+                builder: (context) => ChatScreen()));
+
+                    },
                     leading: CircleAvatar(
                       maxRadius: 28,
                       backgroundImage: AssetImage(images[index]),

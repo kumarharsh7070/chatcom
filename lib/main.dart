@@ -1,5 +1,5 @@
-import 'package:firebase/Chat_Pages/Message_Page.dart';
-import 'package:firebase/chat_screen/chat_home.dart';
+import 'package:firebase/Pages/Message_Page.dart';
+import 'package:firebase/chat_home_page/chat_home.dart';
 import 'package:firebase/first_home.dart';
 import 'package:firebase/gmail_auth.dart';
 import 'package:firebase/gmail_forgot.dart';
@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
         '/gmail_forgot': (context) => gmail_forgot(),
         '/gmail_register':(context)=> gmail_register(),
          '/chat_home':(context)=>chat_home(),
-          '/ChatPage':(context)=> ChatPage(),
+          '/ChatPage':(context)=> MessagePage(),
 
       },
     );
