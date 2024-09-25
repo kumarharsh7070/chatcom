@@ -2,7 +2,10 @@
 // import 'package:firebase/Chat_Pages/Group_Page.dart';
 // import 'package:firebase/Chat_Pages/Message_Page.dart';
 // import 'package:firebase/Chat_Pages/Setting_Page.dart';
+import 'package:firebase/Pages/Group_Page.dart';
 import 'package:firebase/Pages/Message_Page.dart';
+import 'package:firebase/Pages/Status_Page.dart';
+import 'package:firebase/Pages/call_page.dart';
 import 'package:flutter/material.dart';
 // import 'package:google_fonts/google_fonts.dart';
 
@@ -17,9 +20,9 @@ class _chat_homeState extends State<chat_home> {
   int _selectedindex = 0;
   final List<Widget> _pages = [
     MessagePage(),
-    Container(),
-    Container(),
-    Container()
+    Group_Page(),
+    status_page(),
+    call_page()
   ];
 
   void _onItemTapped(int index) {
@@ -80,7 +83,7 @@ class _chat_homeState extends State<chat_home> {
           children: [
             buildNavBarItem(Icons.message, Icons.message_outlined, "chats", 0),
             buildNavBarItem(Icons.groups, Icons.group, "groups", 1),
-            buildNavBarItem(Icons.settings, Icons.settings, "chats", 2),
+            buildNavBarItem(Icons.settings, Icons.circle, "status", 2),
             buildNavBarItem(Icons.call, Icons.call, "calls", 3)
           ],
         ),

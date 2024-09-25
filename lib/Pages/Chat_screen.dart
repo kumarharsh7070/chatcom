@@ -1,8 +1,21 @@
+// ignore_for_file: unused_field
+
+// ignore: unused_import
+import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
+// import 'package:firebase/homeone.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class ChatScreen extends StatelessWidget {
+// ignore: must_be_immutable
+class ChatScreen extends StatefulWidget {
+  @override
+  State<ChatScreen> createState() => _ChatScreenState();
+}
+
+class _ChatScreenState extends State<ChatScreen> {
+  bool _showEmoji = false;
+  final _texteditcontroller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -144,7 +157,11 @@ class ChatScreen extends StatelessWidget {
                       ),
                     ),
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          _showEmoji = !_showEmoji;
+                        });
+                      },
                       icon: FaIcon(
                         FontAwesomeIcons.faceSmile,
                         color: Colors.black,
@@ -164,7 +181,9 @@ class ChatScreen extends StatelessWidget {
                       width: 10,
                     ),
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {});
+                      },
                       icon: FaIcon(
                         FontAwesomeIcons.amazonPay,
                         color: Colors.black,
@@ -191,15 +210,31 @@ class ChatScreen extends StatelessWidget {
                     color: Color(0xFF20A090),
                     borderRadius: BorderRadius.circular(50)),
                 child: IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    setState(() {});
+                  },
                   icon: Icon(Icons.send),
                   color: Colors.white,
                 ),
-              )
+              ),
+               
             ],
+            
           ),
+          
+          
         ),
+        
+      
       ),
+      
+      
     );
+  }
+
+  Widget emojiselect() {
+    return EmojiPicker(onEmojiSelected: (emoji, Category) {
+      print(emoji);
+    });
   }
 }

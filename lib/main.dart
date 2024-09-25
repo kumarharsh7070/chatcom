@@ -1,4 +1,6 @@
 import 'package:firebase/Pages/Message_Page.dart';
+import 'package:firebase/Pages/Status_Page.dart';
+import 'package:firebase/Pages/call_page.dart';
 import 'package:firebase/chat_home_page/chat_home.dart';
 import 'package:firebase/first_home.dart';
 import 'package:firebase/gmail_auth.dart';
@@ -40,10 +42,11 @@ class MyApp extends StatelessWidget {
         '/phone_auth2': (context) => phone_auth2(),
         '/gmail_auth': (context) => gmail_auth(),
         '/gmail_forgot': (context) => gmail_forgot(),
-        '/gmail_register':(context)=> gmail_register(),
-         '/chat_home':(context)=>chat_home(),
-          '/ChatPage':(context)=> MessagePage(),
-
+        '/gmail_register': (context) => gmail_register(),
+        '/chat_home': (context) => chat_home(),
+        '/ChatPage': (context) => MessagePage(),
+        '/status_page': (context) => status_page(),
+        '/call_page': (context) => call_page(),
       },
     );
   }
