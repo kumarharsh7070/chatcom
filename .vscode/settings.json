@@ -1,3 +1,4 @@
 {
-    "vsintellicode.modify.editor.suggestSelection": "enabled"
+    "vsintellicode.modify.editor.suggestSelection": "enabled",
+    "java.configuration.updateBuildConfiguration": "interactive"
 }

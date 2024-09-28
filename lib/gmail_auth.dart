@@ -1,3 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase/models/usermodel.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -9,6 +12,46 @@ class gmail_auth extends StatefulWidget {
 }
 
 class _gmail_authState extends State<gmail_auth> {
+
+  TextEditingController gmailcontroller = TextEditingController();
+  TextEditingController Passwordcontroller = TextEditingController();
+  
+void checkvalues(){
+   String email = gmailcontroller.text.trim();
+    String password = Passwordcontroller.text.trim();
+
+    if(email =="" || password==""){
+      print("please fill all the fields");
+    }
+    else{
+      login(email, password);
+    }
+
+}
+
+void login(String email, String password)async{
+  UserCredential? credential;
+
+  try{
+     credential = await FirebaseAuth.instance.
+              signInWithEmailAndPassword(email: email, password: password);
+
+  }on   FirebaseAuthException catch(ex){
+        print(ex.message.toString());
+      }
+    
+
+    if(credential != null){
+      String uid = credential.user!.uid;
+   
+      DocumentSnapshot userdata= await FirebaseFirestore.instance.collection("users").doc(uid).get();
+      // ignore: unused_local_variable
+      Usermodel usermodel = Usermodel.frommap(userdata.data() as Map<String,dynamic>);
+
+      print("log in successfully");
+    }
+}
+
   @override
   Widget build(BuildContext context) {
     double screenheight = MediaQuery.of(context).size.height;
@@ -173,6 +216,7 @@ class _gmail_authState extends State<gmail_auth> {
               Container(
                 width: screenwidth * 0.85,
                 child: TextField(
+                  controller: gmailcontroller,
                   decoration: InputDecoration(
                       // hintText: 'Enter a search term',    // border: OutlineInputBorder(),
 
@@ -195,6 +239,7 @@ class _gmail_authState extends State<gmail_auth> {
               Container(
                 width: screenwidth * 0.85,
                 child: TextField(
+                  controller: Passwordcontroller,
                   decoration: InputDecoration(
                       // hintText: 'Enter a search term',    // border: OutlineInputBorder(),
 
@@ -207,7 +252,7 @@ class _gmail_authState extends State<gmail_auth> {
                   height:40,
                   child: ElevatedButton(
                     onPressed: () {
-                      
+                      checkvalues();
                     },
                     child: Text('verify',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize:20),),
                     style: ElevatedButton.styleFrom(

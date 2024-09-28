@@ -2,6 +2,7 @@ import 'package:firebase/Pages/Message_Page.dart';
 import 'package:firebase/Pages/Status_Page.dart';
 import 'package:firebase/Pages/call_page.dart';
 import 'package:firebase/chat_home_page/chat_home.dart';
+import 'package:firebase/completeprofile_page.dart';
 import 'package:firebase/first_home.dart';
 import 'package:firebase/gmail_auth.dart';
 import 'package:firebase/gmail_forgot.dart';
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       //  home: firsthome(),
-      initialRoute: '/chat_home',
+      initialRoute: '/completeprofile',
       routes: {
         '/': (context) => firsthome(),
         '/secondone': (context) => secondone(),
@@ -47,6 +48,7 @@ class MyApp extends StatelessWidget {
         '/ChatPage': (context) => MessagePage(),
         '/status_page': (context) => status_page(),
         '/call_page': (context) => call_page(),
+        "/completeprofile":(context)=>completeprofile()
       },
     );
   }
