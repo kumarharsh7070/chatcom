@@ -46,6 +46,9 @@ dependencies:
   cloud_firestore: ^5.4.3
   image_picker: ^1.1.2
   image_cropper: ^8.0.2
+  io: ^1.0.4
+  get: ^4.6.6
+  file_picker: ^8.1.2
   
   # for showing emoji
   

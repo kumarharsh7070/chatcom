@@ -1,8 +1,10 @@
+// import 'package:firebase/gmail_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 // import 'package:google_fonts/google_fonts.dart';
 
 class secondone extends StatefulWidget {
+  
   const secondone({super.key});
 
   @override
@@ -195,13 +197,15 @@ class _secondoneState extends State<secondone> {
                             // foreground
                             ),
                         onPressed: () {
-                          Navigator.pushNamed(context, '/gmail_auth');
+//                           Navigator.push(context, MaterialPageRoute(builder: (context){
+// return gmail_auth();
+            //  }));
                         },
                         child: SizedBox(
                             width: 390,
                             child: Center(
                                 child: Text(
-                              'Sign up with mail',
+                              'Login with mail',
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 15),
                             ))),

@@ -1,3 +1,4 @@
+import 'package:firebase/homeone.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -47,7 +48,9 @@ class _firsthomeState extends State<firsthome> {
             icon: const Icon(Icons.connect_without_contact_sharp, size: 35,color: Colors.white,),
             label: Text(''),
             onPressed: () {
-             Navigator.pushNamed(context, '/secondone');
+             Navigator.push(context, MaterialPageRoute(builder: (context){
+return secondone();
+             }));
             },
             
             style: ElevatedButton.styleFrom(

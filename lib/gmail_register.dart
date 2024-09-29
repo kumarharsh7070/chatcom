@@ -1,13 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase/completeprofile_page.dart';
+import 'package:firebase/CompleteProfileScreen.dart';
 import 'package:firebase/models/usermodel.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:get/get.dart';
 
 
 
 class gmail_register extends StatefulWidget {
-  const gmail_register({super.key});
+  //  final Usermodel usermodel;
+  // final User firebaseuser;
+  // const gmail_register({super.key, required this.usermodel, required this.firebaseuser});
 
   @override
   State<gmail_register> createState() => _gmail_registerState();
@@ -17,6 +21,10 @@ class _gmail_registerState extends State<gmail_register> {
   TextEditingController gmailcontroller = TextEditingController();
   TextEditingController Passwordcontroller = TextEditingController();
   TextEditingController cnpasswordcontroller = TextEditingController();
+  
+  // get newuser => null;
+  
+  // get credential => null;
 
   void checkvalues() {
     String email = gmailcontroller.text.trim();
@@ -52,6 +60,11 @@ class _gmail_registerState extends State<gmail_register> {
         );
         await FirebaseFirestore.instance.collection("users").doc(uid).set(newuser.toMap()).then((value){
            print("new user created");
+           Navigator.push(
+            context,MaterialPageRoute(builder: (context){
+              return CompleteProfileScreen(usermodel: newuser, firebaseuser:credential!.user!);
+            })
+           );
         });
       }
 
@@ -192,9 +205,11 @@ class _gmail_registerState extends State<gmail_register> {
                 child: ElevatedButton(
                   onPressed: () {
                     checkvalues();
-                    Navigator.push(context, MaterialPageRoute(builder:(context){
-                      return completeprofile();
-                    }));
+                    // Navigator.push(context, MaterialPageRoute(builder:(context){
+                    //   return CompleteProfileScreen(
+                        
+                    //   );
+                    // }));
                   },
                   child: Text(
                     'Create an account',
@@ -211,6 +226,18 @@ class _gmail_registerState extends State<gmail_register> {
             ],
           ),
         ),
+      ),
+      bottomNavigationBar: Container(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+          Text("Already have an account?",style: TextStyle(fontSize: 16),),
+          CupertinoButton(child:Text("Log in",style: TextStyle(
+            fontSize: 16
+          ),), onPressed:(){
+            Navigator.pop(context);
+          })
+        ],),
       ),
     );
   }
