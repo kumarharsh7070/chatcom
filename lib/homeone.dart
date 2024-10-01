@@ -1,6 +1,10 @@
 // import 'package:firebase/gmail_auth.dart';
+// import 'package:firebase/gmail_auth.dart';
+import 'package:firebase/gmail_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:google_fonts/google_fonts.dart';
 
 class secondone extends StatefulWidget {
@@ -12,6 +16,40 @@ class secondone extends StatefulWidget {
 }
 
 class _secondoneState extends State<secondone> {
+// ------------------------------------------function--------------------
+  
+Future<void> login() async {
+  try {
+    // Trigger the Google Sign-In process
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+    // If the user cancels the sign-in, googleUser will be null
+    if (googleUser == null) {
+      print('Sign-in aborted by user');
+      return;
+    }
+
+    // Obtain the authentication details from the request
+    final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+
+    // Create a new credential using the authentication token
+    final OAuthCredential credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
+
+    // Use the credential to sign in to Firebase
+    UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
+
+    // Optionally, you can get the signed-in user information
+    User? user = userCredential.user;
+
+    print('Signed in successfully as ${user?.displayName} (${user?.email})');
+  } catch (e) {
+    // Handle any errors that occur during sign-in
+    print('Error during Google Sign-In: $e');
+  }
+}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,7 +86,7 @@ class _secondoneState extends State<secondone> {
                       style: DefaultTextStyle.of(context).style,
                       children: const <TextSpan>[
                         TextSpan(
-                            text: 'Connect\n',
+                            text: 'Connects\n',
                             style: TextStyle(
                                 height: 2.0,
                                 fontSize: 30,
@@ -127,7 +165,7 @@ class _secondoneState extends State<secondone> {
                           focusColor: Color.fromARGB(255, 92, 204, 96),
                           splashColor: const Color.fromARGB(255, 203, 109, 219),
                           elevation: 10,
-                          onPressed: () => {},
+                          onPressed: (()=>login()),
                           shape: RoundedRectangleBorder(
                               side: BorderSide(width: 3, color: Colors.black),
                               borderRadius: BorderRadius.circular(100))),
@@ -197,9 +235,9 @@ class _secondoneState extends State<secondone> {
                             // foreground
                             ),
                         onPressed: () {
-//                           Navigator.push(context, MaterialPageRoute(builder: (context){
-// return gmail_auth();
-            //  }));
+                          Navigator.push(context, MaterialPageRoute(builder: (context){
+                            return gmail_auth();
+                          }));
                         },
                         child: SizedBox(
                             width: 390,

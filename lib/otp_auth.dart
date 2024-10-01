@@ -69,7 +69,7 @@ class _phone_authState extends State<phone_auth> {
                   onChanged: (value){
                     phone =value;
                   },
-                  keyboardType: TextInputType.number,
+                  // keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                       labelText: "Enter your mobile number",
                       hintText: "Enter your number",

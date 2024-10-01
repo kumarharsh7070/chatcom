@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase/CompleteProfileScreen.dart';
+// import 'package:firebase/CompleteProfileScreen.dart';
 import 'package:firebase/models/usermodel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -60,11 +60,11 @@ class _gmail_registerState extends State<gmail_register> {
         );
         await FirebaseFirestore.instance.collection("users").doc(uid).set(newuser.toMap()).then((value){
            print("new user created");
-           Navigator.push(
-            context,MaterialPageRoute(builder: (context){
-              return CompleteProfileScreen(usermodel: newuser, firebaseuser:credential!.user!);
-            })
-           );
+          //  Navigator.push(
+          //   context,MaterialPageRoute(builder: (context){
+          //     return CompleteProfileScreen(usermodel: newuser, firebaseuser:credential!.user!);
+          //   })
+          //  );
         });
       }
 
@@ -231,7 +231,7 @@ class _gmail_registerState extends State<gmail_register> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-          Text("Already have an account?",style: TextStyle(fontSize: 16),),
+          Text("Already haves an account?",style: TextStyle(fontSize: 16),),
           CupertinoButton(child:Text("Log in",style: TextStyle(
             fontSize: 16
           ),), onPressed:(){

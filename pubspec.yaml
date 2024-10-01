@@ -49,6 +49,7 @@ dependencies:
   io: ^1.0.4
   get: ^4.6.6
   file_picker: ^8.1.2
+  google_sign_in: ^6.2.1
   
   # for showing emoji
   

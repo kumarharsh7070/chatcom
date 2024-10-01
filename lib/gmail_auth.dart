@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase/chat_home_page/chat_home.dart';
+// import 'package:firebase/chat_home_page/chat_home.dart';
 import 'package:firebase/gmail_register.dart';
 // import 'package:firebase/CompleteProfileScreen.dart';
 import 'package:firebase/models/usermodel.dart';
@@ -9,10 +9,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 // import 'package:get/get.dart';
 
 class gmail_auth extends StatefulWidget {
-  final Usermodel usermodel;
-  final User firebaseuser;
+  // final Usermodel usermodel;
+  // final User firebaseuser;
 
-  const gmail_auth({super.key, required this.usermodel, required this.firebaseuser});
+  // const gmail_auth({super.key, required this.usermodel, required this.firebaseuser});
   
   @override
   State<gmail_auth> createState() => _gmail_authState();
@@ -58,11 +58,11 @@ void login(String email, String password)async{
       Usermodel usermodel = Usermodel.frommap(userdata.data() as Map<String,dynamic>);
 
       print("log in successfully");
-      Navigator.push(context, MaterialPageRoute(builder: (context){
-return chat_home(
-       usermodel: widget.usermodel, firebaseuser: widget.firebaseuser,
-);
-      }));
+//       Navigator.push(context, MaterialPageRoute(builder: (context){
+// return chat_home(
+//        usermodel: widget.usermodel, firebaseuser: widget.firebaseuser,
+// );
+//       }));
       
     }
 }

@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "157163708733",
+    "project_id": "chatcomreal",
+    "storage_bucket": "chatcomreal.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:157163708733:android:bf7f28e597ee84b38ae554",
+        "android_client_info": {
+          "package_name": "com.example.firebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "157163708733-id8dkd953gth4ho44r3i5bsp1b55q2lk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.firebase",
+            "certificate_hash": "3b4302f9d48dede05b7cb67b1b2e9c2562f0f549"
+          }
+        },
+        {
+          "client_id": "157163708733-hognci51m4phq40t1v6ar9a6hfvenb8i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBgdxRoLi3bKYPPXWHd6qi9JpQbyWQwYH8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "157163708733-cnp5lthq7bilvhr1dq7ofja558cuoptq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "157163708733-o111hbcmbrtsd0ihmdovj8tdt93squmi.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.firebase"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
