@@ -1,243 +1,232 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:firebase/CompleteProfileScreen.dart';
+import 'package:firebase/CompleteProfileScreen.dart';
 import 'package:firebase/models/usermodel.dart';
-import 'package:flutter/cupertino.dart';
+// import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:get/get.dart';
 
-
-
-class gmail_register extends StatefulWidget {
-  //  final Usermodel usermodel;
-  // final User firebaseuser;
-  // const gmail_register({super.key, required this.usermodel, required this.firebaseuser});
-
+class GmailRegister extends StatefulWidget {
   @override
-  State<gmail_register> createState() => _gmail_registerState();
+  State<GmailRegister> createState() => _GmailRegisterState();
 }
 
-class _gmail_registerState extends State<gmail_register> {
-  TextEditingController gmailcontroller = TextEditingController();
-  TextEditingController Passwordcontroller = TextEditingController();
-  TextEditingController cnpasswordcontroller = TextEditingController();
-  
-  // get newuser => null;
-  
-  // get credential => null;
+class _GmailRegisterState extends State<GmailRegister> {
+  TextEditingController gmailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
 
-  void checkvalues() {
-    String email = gmailcontroller.text.trim();
-    String password = Passwordcontroller.text.trim();
-    String cnpassword = cnpasswordcontroller.text.trim();
+  // Check for input validation
+  void checkValues() {
+    String email = gmailController.text.trim();
+    String password = passwordController.text.trim();
+    String confirmPassword = confirmPasswordController.text.trim();
 
-    if (email == "" || password == "" || cnpassword == "") {
-      print('please fill all field');
-    } else if (password != cnpassword) {
-      print("password do not match");
+    if (email == "" || password == "" || confirmPassword == "") {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text("Please fill all fields"),
+        backgroundColor: Colors.red,
+      ));
+    } else if (password != confirmPassword) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text("Passwords do not match"),
+        backgroundColor: Colors.red,
+      ));
     } else {
-      signup(email, password);
+      signUp(email, password);
     }
   }
 
-  void signup(String email, String password) async {
-      UserCredential? credential;
-      try{
-              credential = await FirebaseAuth.instance.
-              createUserWithEmailAndPassword(email: email, password: password);
+  // Sign-up function with Firestore integration and SnackBar
+  void signUp(String email, String password) async {
+    UserCredential? credential;
+    try {
+      credential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
 
-      } on FirebaseAuthException catch(ex){
-        print(ex.message.toString());
-      }
-
-      if(credential != null){
+      // ignore: unnecessary_null_comparison
+      if (credential != null) {
         String uid = credential.user!.uid;
-        Usermodel newuser = Usermodel(
+        Usermodel newUser = Usermodel(
           uid: uid,
           email: email,
           fullname: "",
-          profilepic: ""
+          profilepic: "",
         );
-        await FirebaseFirestore.instance.collection("users").doc(uid).set(newuser.toMap()).then((value){
-           print("new user created");
-          //  Navigator.push(
-          //   context,MaterialPageRoute(builder: (context){
-          //     return CompleteProfileScreen(usermodel: newuser, firebaseuser:credential!.user!);
-          //   })
-          //  );
+
+        await FirebaseFirestore.instance
+            .collection("users")
+            .doc(uid)
+            .set(newUser.toMap())
+            .then((value) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text("New user created successfully!"),
+            backgroundColor: Colors.green,
+          ));
+
+          // Navigate to CompleteProfileScreen
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return CompleteProfileScreen();
+          }));
         });
       }
-
+    } on FirebaseAuthException catch (ex) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(ex.message.toString()),
+        backgroundColor: Colors.red,
+      ));
+    }
   }
+
   @override
   Widget build(BuildContext context) {
-    double screenwidth = MediaQuery.of(context).size.width;
-    double screenheight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
       body: Center(
         child: Container(
-          width: screenwidth * 0.9,
-          height: screenheight * 1.0,
-          child: Column(
-            children: [
-              Container(
-                padding: EdgeInsets.only(top: 20),
-                width: screenwidth * 0.85,
-                child: Icon(
+          padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(height: screenHeight * 0.05),
+                // Icon and title
+                Icon(
                   Icons.connect_without_contact_sharp,
-                  size: 35,
+                  size: screenWidth * 0.1,
                   color: Colors.black,
                 ),
-              ),
-              SizedBox(height: 20),
-              Container(
-                width: screenwidth * 0.85,
-                child: Center(
-                    child: Text(
+                SizedBox(height: screenHeight * 0.02),
+                Text(
                   'Sign up with email',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                )),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Container(
-                width: screenwidth * 0.85,
-                child: Center(
-                    child: Text(
-                  'Get chatting with friends and family today by ',
-                  style: TextStyle(color: Color(0xFF797C7B)),
-                )),
-              ),
-              Container(
-                width: screenwidth * 0.85,
-                child: Center(
-                    child: Text(
-                  'signing up for our chat app',
-                  style: TextStyle(color: Color(0xFF797C7B)),
-                )),
-              ),
-              SizedBox(
-                height: 50,
-              ),
-              Container(
-                // color: Colors.red,
-                width: screenwidth * 0.85,
-                height: 20,
-                child: Text(
-                  'Email Address',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    color: Color(0xFF797C7B),
+                    fontSize: screenWidth * 0.05,
                   ),
                 ),
-              ),
-              Container(
-                width: screenwidth * 0.85,
-                child: TextField(
-                  controller: gmailcontroller,
-                  decoration: InputDecoration(
-                      // hintText: 'Enter a search term',    // border: OutlineInputBorder(),
-
-                      ),
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Container(
-                // color: Colors.red,
-                width: screenwidth * 0.85,
-                height: 20,
-                child: Text(
-                  'Your Password',
+                SizedBox(height: screenHeight * 0.01),
+                Text(
+                  'Get chatting with friends and family today by signing up for our chat app',
                   style: TextStyle(
-                    fontWeight: FontWeight.bold,
                     color: Color(0xFF797C7B),
+                    fontSize: screenWidth * 0.04,
                   ),
+                  textAlign: TextAlign.center,
                 ),
-              ),
-              Container(
-                width: screenwidth * 0.85,
-                child: TextField(
-                  controller: Passwordcontroller,
-                  decoration: InputDecoration(
-                      // hintText: 'Enter a search term',    // border: OutlineInputBorder(),
+                SizedBox(height: screenHeight * 0.05),
 
-                      ),
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Container(
-                // color: Colors.red,
-                width: screenwidth * 0.85,
-                height: 20,
-                child: Text(
-                  'Confirm Passwords',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF797C7B),
-                  ),
-                ),
-              ),
-              Container(
-                width: screenwidth * 0.85,
-                child: TextField(
-                  controller: cnpasswordcontroller,
-                  decoration: InputDecoration(
-                      // hintText: 'Enter a search term',    // border: OutlineInputBorder(),
-
-                      ),
-                ),
-              ),
-              SizedBox(
-                height: 80,
-              ),
-              Container(
-                width: screenwidth * 0.70,
-                height: 40,
-                child: ElevatedButton(
-                  onPressed: () {
-                    checkvalues();
-                    // Navigator.push(context, MaterialPageRoute(builder:(context){
-                    //   return CompleteProfileScreen(
-                        
-                    //   );
-                    // }));
-                  },
+                // Email field
+                Align(
+                  alignment: Alignment.centerLeft,
                   child: Text(
-                    'Create an account',
+                    'Email Address',
                     style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF797C7B),
+                      fontSize: screenWidth * 0.04,
+                    ),
+                  ),
+                ),
+                TextField(
+                  controller: gmailController,
+                  decoration: InputDecoration(
+                    hintText: 'Enter your email',
+                    contentPadding: EdgeInsets.symmetric(
+                      vertical: screenHeight * 0.02,
+                      horizontal: screenWidth * 0.04,
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                ),
+                SizedBox(height: screenHeight * 0.02),
+
+                // Password field
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'Your Password',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF797C7B),
+                      fontSize: screenWidth * 0.04,
+                    ),
+                  ),
+                ),
+                TextField(
+                  controller: passwordController,
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    hintText: 'Enter your password',
+                    contentPadding: EdgeInsets.symmetric(
+                      vertical: screenHeight * 0.02,
+                      horizontal: screenWidth * 0.04,
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                ),
+                SizedBox(height: screenHeight * 0.02),
+
+                // Confirm Password field
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'Confirm Password',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF797C7B),
+                      fontSize: screenWidth * 0.04,
+                    ),
+                  ),
+                ),
+                TextField(
+                  controller: confirmPasswordController,
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    hintText: 'Re-enter your password',
+                    contentPadding: EdgeInsets.symmetric(
+                      vertical: screenHeight * 0.02,
+                      horizontal: screenWidth * 0.04,
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                ),
+                SizedBox(height: screenHeight * 0.08),
+
+                // "Create Account" Button
+                SizedBox(
+                  width: screenWidth * 0.8,
+                  height: screenHeight * 0.07,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      checkValues();
+                    },
+                    child: Text(
+                      'Create an account',
+                      style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
-                        fontSize: 15),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF24786D),
+                        fontSize: screenWidth * 0.045,
+                      ),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color(0xFF24786D),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
-      ),
-      bottomNavigationBar: Container(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-          Text("Already haves an account?",style: TextStyle(fontSize: 16),),
-          CupertinoButton(child:Text("Log in",style: TextStyle(
-            fontSize: 16
-          ),), onPressed:(){
-            Navigator.pop(context);
-          })
-        ],),
       ),
     );
   }

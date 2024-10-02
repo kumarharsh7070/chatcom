@@ -1,277 +1,225 @@
 // import 'package:firebase/gmail_auth.dart';
-// import 'package:firebase/gmail_auth.dart';
+// import 'package:firebase/gmail_register.dart';
 import 'package:firebase/gmail_auth.dart';
+import 'package:firebase/gmail_register.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:google_fonts/google_fonts.dart';
 
-class secondone extends StatefulWidget {
-  
-  const secondone({super.key});
+class SecondOne extends StatefulWidget {
+  const SecondOne({super.key});
 
   @override
-  State<secondone> createState() => _secondoneState();
+  State<SecondOne> createState() => _SecondOneState();
 }
 
-class _secondoneState extends State<secondone> {
-// ------------------------------------------function--------------------
-  
-Future<void> login() async {
-  try {
-    // Trigger the Google Sign-In process
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+class _SecondOneState extends State<SecondOne> {
+  // Google Sign-In function
+  Future<void> login() async {
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      if (googleUser == null) return;
 
-    // If the user cancels the sign-in, googleUser will be null
-    if (googleUser == null) {
-      print('Sign-in aborted by user');
-      return;
+      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+      final OAuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+      UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
+      User? user = userCredential.user;
+      print('Signed in as ${user?.displayName} (${user?.email})');
+    } catch (e) {
+      print('Error during Google Sign-In: $e');
     }
-
-    // Obtain the authentication details from the request
-    final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-
-    // Create a new credential using the authentication token
-    final OAuthCredential credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth.accessToken,
-      idToken: googleAuth.idToken,
-    );
-
-    // Use the credential to sign in to Firebase
-    UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
-
-    // Optionally, you can get the signed-in user information
-    User? user = userCredential.user;
-
-    print('Signed in successfully as ${user?.displayName} (${user?.email})');
-  } catch (e) {
-    // Handle any errors that occur during sign-in
-    print('Error during Google Sign-In: $e');
   }
-}
+
   @override
   Widget build(BuildContext context) {
+    // Get screen dimensions for responsiveness
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       body: Container(
-        height: double.infinity,
         width: double.infinity,
+        height: double.infinity,
         decoration: BoxDecoration(
-            gradient: LinearGradient(colors: [
-          Color.fromARGB(255, 191, 184, 195),
-          Color.fromARGB(255, 219, 190, 196)
-        ])),
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 50.0),
-              child: Icon(
-                Icons.connect_without_contact_sharp,
-                size: 35,
-                color: Colors.black,
+          gradient: LinearGradient(
+            colors: [
+              Color.fromARGB(255, 191, 184, 195),
+              Color.fromARGB(255, 219, 190, 196),
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+        ),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.08), // Responsive horizontal padding
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              SizedBox(height: screenHeight * 0.07), // Responsive top spacing
+              Center(
+                child: Icon(
+                  Icons.connect_without_contact_sharp,
+                  size: screenWidth * 0.1, // Icon size responsive to screen width
+                  color: Colors.black,
+                ),
               ),
-            ),
-            Text('Chatbox'),
-            SizedBox(
-              height: 90,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 10.0),
-              child: Column(
-                // mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+              SizedBox(height: screenHeight * 0.02),
+              Center(
+                child: Text(
+                  'Chatbox',
+                  style: TextStyle(
+                    fontSize: screenWidth * 0.07, // Font size responsive
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+              SizedBox(height: screenHeight * 0.05),
+              RichText(
+                text: TextSpan(
+                  style: TextStyle(
+                    fontSize: screenWidth * 0.045, // Responsive text size
+                    color: Colors.black,
+                    height: 1.2,
+                  ),
+                  children: const [
+                    TextSpan(text: 'Connects\n', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30)),
+                    TextSpan(text: 'friends\n', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30)),
+                    TextSpan(text: 'easily &\n', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 45)),
+                    TextSpan(text: 'quickly\n', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 45)),
+                    TextSpan(
+                        text: 'Our chat app is the perfect way to stay\n',
+                        style: TextStyle(fontSize: 15, color: Color.fromARGB(255, 115, 109, 109))),
+                    TextSpan(
+                        text: 'connect with friends and family',
+                        style: TextStyle(fontSize: 15, color: Color.fromARGB(255, 115, 109, 109))),
+                  ],
+                ),
+              ),
+              SizedBox(height: screenHeight * 0.05), // Responsive spacing
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  RichText(
-                    text: TextSpan(
-                      style: DefaultTextStyle.of(context).style,
-                      children: const <TextSpan>[
-                        TextSpan(
-                            text: 'Connects\n',
-                            style: TextStyle(
-                                height: 2.0,
-                                fontSize: 30,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                                decoration: TextDecoration.none)),
-                        TextSpan(
-                            text: 'friends\n',
-                            style: TextStyle(
-                                fontSize: 30,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                                decoration: TextDecoration.none)),
-                        TextSpan(
-                            text: 'easily &\n',
-                            style: TextStyle(
-                                fontSize: 45,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                                decoration: TextDecoration.none)),
-                        TextSpan(
-                            text: 'quickly\n',
-                            style: TextStyle(
-                                fontSize: 45,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                                decoration: TextDecoration.none)),
-                        TextSpan(
-                            text: 'Our chat app is the perfect way to stay\n',
-                            style: TextStyle(
-                                height: 2.2,
-                                fontSize: 15,
-                                color: Color.fromARGB(255, 115, 109, 109),
-                                decoration: TextDecoration.none)),
-                        TextSpan(
-                            text: 'connect with friends and family',
-                            style: TextStyle(
-                                fontSize: 15,
-                                color: Color.fromARGB(255, 115, 109, 109),
-                                decoration: TextDecoration.none))
-                      ],
+                  FloatingActionButton(
+                    child: FaIcon(
+                      FontAwesomeIcons.mobileScreen,
+                      color: Colors.black,
+                      size: screenWidth * 0.07, // Responsive icon size
+                    ),
+                    backgroundColor: Colors.white,
+                    onPressed: () => Navigator.pushNamed(context, '/phone_auth'),
+                    shape: RoundedRectangleBorder(
+                      side: BorderSide(width: 3, color: Colors.black),
+                      borderRadius: BorderRadius.circular(100),
                     ),
                   ),
-                  SizedBox(
-                    height: 45,
+                  SizedBox(width: screenWidth * 0.05), // Responsive horizontal spacing
+                  FloatingActionButton(
+                    child: FaIcon(
+                      FontAwesomeIcons.google,
+                      color: Colors.black,
+                      size: screenWidth * 0.07,
+                    ),
+                    backgroundColor: Colors.white,
+                    onPressed: login,
+                    shape: RoundedRectangleBorder(
+                      side: BorderSide(width: 3, color: Colors.black),
+                      borderRadius: BorderRadius.circular(100),
+                    ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      FloatingActionButton(
-                          child: FaIcon(
-                            FontAwesomeIcons.mobileScreen,
-                            color: Colors.black,
-                          ),
-                          backgroundColor: Colors.white,
-                          hoverColor: const Color.fromARGB(255, 230, 174, 92),
-                          focusColor: Color.fromARGB(255, 92, 204, 96),
-                          splashColor: const Color.fromARGB(255, 203, 109, 219),
-                          elevation: 10,
-                          foregroundColor: Color.fromARGB(255, 218, 54, 54),
-                          onPressed: () =>
-                              {Navigator.pushNamed(context, '/phone_auth')},
-                          shape: RoundedRectangleBorder(
-                              side: BorderSide(width: 3, color: Colors.black),
-                              borderRadius: BorderRadius.circular(100))),
-                      SizedBox(
-                        width: 15,
-                      ),
-                      FloatingActionButton(
-                          child: FaIcon(
-                            FontAwesomeIcons.google,
-                            color: Colors.black,
-                          ),
-                          backgroundColor: Colors.white,
-                          hoverColor: const Color.fromARGB(255, 230, 174, 92),
-                          focusColor: Color.fromARGB(255, 92, 204, 96),
-                          splashColor: const Color.fromARGB(255, 203, 109, 219),
-                          elevation: 10,
-                          onPressed: (()=>login()),
-                          shape: RoundedRectangleBorder(
-                              side: BorderSide(width: 3, color: Colors.black),
-                              borderRadius: BorderRadius.circular(100))),
-                      SizedBox(
-                        width: 15,
-                      ),
-                      FloatingActionButton(
-                          child: FaIcon(
-                            FontAwesomeIcons.apple,
-                            color: Colors.black,
-                          ),
-                          backgroundColor: Colors.white,
-                          hoverColor: const Color.fromARGB(255, 230, 174, 92),
-                          focusColor: Color.fromARGB(255, 92, 204, 96),
-                          splashColor: const Color.fromARGB(255, 203, 109, 219),
-                          elevation: 10,
-                          onPressed: () => {},
-                          shape: RoundedRectangleBorder(
-                              side: BorderSide(width: 3, color: Colors.black),
-                              borderRadius: BorderRadius.circular(100)))
-                    ],
+                  SizedBox(width: screenWidth * 0.05),
+                  FloatingActionButton(
+                    child: FaIcon(
+                      FontAwesomeIcons.apple,
+                      color: Colors.black,
+                      size: screenWidth * 0.07,
+                    ),
+                    backgroundColor: Colors.white,
+                    onPressed: () {},
+                    shape: RoundedRectangleBorder(
+                      side: BorderSide(width: 3, color: Colors.black),
+                      borderRadius: BorderRadius.circular(100),
+                    ),
                   ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  IntrinsicHeight(
-                      child: new Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                        width: 200,
-                        height: 2,
-                        decoration: BoxDecoration(
-                          color: Colors.black,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Text(
-                        "OR",
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Container(
-                        width: 200,
-                        height: 2,
-                        decoration: BoxDecoration(
-                          color: Colors.black,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      )
-                    ],
-                  )),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Column(
-                    children: [
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white
-                            // foreground
-                            ),
-                        onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context){
-                            return gmail_auth();
-                          }));
-                        },
-                        child: SizedBox(
-                            width: 390,
-                            child: Center(
-                                child: Text(
-                              'Login with mail',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 15),
-                            ))),
-                      ),
-                      SizedBox(
-                        height: 40,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text('Existing account?'),
-                          TextButton(
-                            onPressed: () {},
-                            child: Text(
-                              'Log in',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black),
-                            ),
-                          )
-                        ],
-                      )
-                    ],
-                  )
                 ],
               ),
-            )
-          ],
+              SizedBox(height: screenHeight * 0.03), // Responsive spacing
+              IntrinsicHeight(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: screenWidth * 0.3,
+                      height: 2,
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    SizedBox(width: screenWidth * 0.05),
+                    Text(
+                      "OR",
+                      style: TextStyle(fontSize: screenWidth * 0.06, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(width: screenWidth * 0.05),
+                    Container(
+                      width: screenWidth * 0.3,
+                      height: 2,
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: screenHeight * 0.02),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.white,
+                ),
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => GmailAuth()));
+                },
+                child: SizedBox(
+                  width: screenWidth * 0.9,
+                  child: Center(
+                    child: Text(
+                      'Login with mail',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: screenWidth * 0.05, // Responsive font size
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: screenHeight * 0.04), // Responsive spacing
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "You don't have an account?",
+                    style: TextStyle(fontSize:15),
+                  ),
+                  CupertinoButton(
+                    child: Text(
+                      "Sign in",
+                      style: TextStyle(fontSize:18),
+                    ),
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => GmailRegister()));
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -6,16 +6,12 @@ import 'package:firebase/Pages/Group_Page.dart';
 import 'package:firebase/Pages/Message_Page.dart';
 import 'package:firebase/Pages/Status_Page.dart';
 import 'package:firebase/Pages/call_page.dart';
-import 'package:firebase/models/usermodel.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
 // import 'package:google_fonts/google_fonts.dart';
 
 class chat_home extends StatefulWidget {
-  final Usermodel usermodel;
-  final User firebaseuser;
-  const chat_home({super.key, required this.usermodel, required this.firebaseuser});
-
+ 
   @override
   State<chat_home> createState() => _chat_homeState();
 }
