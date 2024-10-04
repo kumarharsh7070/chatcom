@@ -97,7 +97,7 @@ class _SecondOneState extends State<SecondOne> {
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 30)),
                     TextSpan(
-                        text: 'friends\n',
+                        text: 'friendss\n',
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 30)),
                     TextSpan(
