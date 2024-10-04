@@ -22,12 +22,14 @@ class _SecondOneState extends State<SecondOne> {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
       if (googleUser == null) return;
 
-      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
       final OAuthCredential credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
-      UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithCredential(credential);
       User? user = userCredential.user;
       print('Signed in as ${user?.displayName} (${user?.email})');
     } catch (e) {
@@ -56,7 +58,8 @@ class _SecondOneState extends State<SecondOne> {
           ),
         ),
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.08), // Responsive horizontal padding
+          padding: EdgeInsets.symmetric(
+              horizontal: screenWidth * 0.08), // Responsive horizontal padding
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -64,7 +67,8 @@ class _SecondOneState extends State<SecondOne> {
               Center(
                 child: Icon(
                   Icons.connect_without_contact_sharp,
-                  size: screenWidth * 0.1, // Icon size responsive to screen width
+                  size:
+                      screenWidth * 0.1, // Icon size responsive to screen width
                   color: Colors.black,
                 ),
               ),
@@ -88,16 +92,32 @@ class _SecondOneState extends State<SecondOne> {
                     height: 1.2,
                   ),
                   children: const [
-                    TextSpan(text: 'Connects\n', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30)),
-                    TextSpan(text: 'friends\n', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30)),
-                    TextSpan(text: 'easily &\n', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 45)),
-                    TextSpan(text: 'quickly\n', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 45)),
+                    TextSpan(
+                        text: 'Connects\n',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 30)),
+                    TextSpan(
+                        text: 'friends\n',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 30)),
+                    TextSpan(
+                        text: 'easily &\n',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 45)),
+                    TextSpan(
+                        text: 'quicklys\n',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 45)),
                     TextSpan(
                         text: 'Our chat app is the perfect way to stay\n',
-                        style: TextStyle(fontSize: 15, color: Color.fromARGB(255, 115, 109, 109))),
+                        style: TextStyle(
+                            fontSize: 15,
+                            color: Color.fromARGB(255, 115, 109, 109))),
                     TextSpan(
                         text: 'connect with friends and family',
-                        style: TextStyle(fontSize: 15, color: Color.fromARGB(255, 115, 109, 109))),
+                        style: TextStyle(
+                            fontSize: 15,
+                            color: Color.fromARGB(255, 115, 109, 109))),
                   ],
                 ),
               ),
@@ -112,13 +132,16 @@ class _SecondOneState extends State<SecondOne> {
                       size: screenWidth * 0.07, // Responsive icon size
                     ),
                     backgroundColor: Colors.white,
-                    onPressed: () => Navigator.pushNamed(context, '/phone_auth'),
+                    onPressed: () =>
+                        Navigator.pushNamed(context, '/phone_auth'),
                     shape: RoundedRectangleBorder(
                       side: BorderSide(width: 3, color: Colors.black),
                       borderRadius: BorderRadius.circular(100),
                     ),
                   ),
-                  SizedBox(width: screenWidth * 0.05), // Responsive horizontal spacing
+                  SizedBox(
+                      width:
+                          screenWidth * 0.05), // Responsive horizontal spacing
                   FloatingActionButton(
                     child: FaIcon(
                       FontAwesomeIcons.google,
@@ -164,7 +187,9 @@ class _SecondOneState extends State<SecondOne> {
                     SizedBox(width: screenWidth * 0.05),
                     Text(
                       "OR",
-                      style: TextStyle(fontSize: screenWidth * 0.06, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          fontSize: screenWidth * 0.06,
+                          fontWeight: FontWeight.bold),
                     ),
                     SizedBox(width: screenWidth * 0.05),
                     Container(
@@ -184,7 +209,8 @@ class _SecondOneState extends State<SecondOne> {
                   backgroundColor: Colors.white,
                 ),
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => GmailAuth()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => GmailAuth()));
                 },
                 child: SizedBox(
                   width: screenWidth * 0.9,
@@ -205,15 +231,18 @@ class _SecondOneState extends State<SecondOne> {
                 children: [
                   Text(
                     "You don't have an account?",
-                    style: TextStyle(fontSize:15),
+                    style: TextStyle(fontSize: 15),
                   ),
                   CupertinoButton(
                     child: Text(
                       "Sign in",
-                      style: TextStyle(fontSize:18),
+                      style: TextStyle(fontSize: 18),
                     ),
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => GmailRegister()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => GmailRegister()));
                     },
                   ),
                 ],
