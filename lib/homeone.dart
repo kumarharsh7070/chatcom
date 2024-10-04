@@ -1,10 +1,13 @@
 // import 'package:firebase/gmail_auth.dart';
 // import 'package:firebase/gmail_register.dart';
+import 'package:firebase/Razorpay_payment.dart';
+// import 'package:firebase/cha_page.dart';
 import 'package:firebase/gmail_auth.dart';
 import 'package:firebase/gmail_register.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+// import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -140,7 +143,11 @@ class _SecondOneState extends State<SecondOne> {
                       size: screenWidth * 0.07,
                     ),
                     backgroundColor: Colors.white,
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context){
+                        return PaymentPage();
+                      }));
+                    },
                     shape: RoundedRectangleBorder(
                       side: BorderSide(width: 3, color: Colors.black),
                       borderRadius: BorderRadius.circular(100),

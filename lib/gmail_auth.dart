@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase/chat_home_page/chat_home.dart';
+import 'package:firebase/cha_page.dart';
+// import 'package:firebase/chat_home_page/chat_home.dart';
 // import 'package:firebase/chat_home_page/chat_home.dart';
 import 'package:firebase/gmail_forget.dart';
 import 'package:firebase/models/usermodel.dart';
@@ -49,7 +50,7 @@ class _GmailAuthState extends State<GmailAuth> {
           Usermodel.frommap(userdata.data() as Map<String, dynamic>);
 
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-        return chat_home();
+        return ChatPage();
       }));
     }
   }
