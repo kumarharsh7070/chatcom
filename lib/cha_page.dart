@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase/gmail_auth.dart';
+// import 'package:firebase/gmail_auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -41,11 +41,10 @@ class _ChatPageState extends State<ChatPage> {
         centerTitle: true,
         actions: [
           IconButton(
-            icon: Icon(Icons.logout,color: Colors.white,),
+            icon: Icon(Icons.logout),
             onPressed: () async {
-              await _auth.signOut();
-              Navigator.pushReplacement(
-                  context, MaterialPageRoute(builder: (context) => GmailAuth())); // Assuming you have LoginPage widget
+              await FirebaseAuth.instance.signOut();  // Log the user out
+              Navigator.pushReplacementNamed(context, '/GmailAuth'); // Go back to login
             },
           ),
         ],

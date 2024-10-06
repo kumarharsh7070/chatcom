@@ -115,7 +115,7 @@ class _SecondOneState extends State<SecondOne> {
                       size: screenWidth * 0.07, // Responsive icon size
                     ),
                     backgroundColor: Colors.white,
-                    onPressed: () => Navigator.pushNamed(context, '/phone_auth'),
+                    onPressed: () => Navigator.pushNamed(context, '/PhoneAuth'),
                     shape: RoundedRectangleBorder(
                       side: BorderSide(width: 3, color: Colors.black),
                       borderRadius: BorderRadius.circular(100),
