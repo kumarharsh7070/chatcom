@@ -43,7 +43,7 @@ class _SplashScreenState extends State<SplashScreen> {
             ),
             SizedBox(height: 20),
             Text(
-              'Welcome to Chat App',
+              'Welcome to Chat Apps',
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
