@@ -38,7 +38,7 @@ class _GmailForgotState extends State<GmailForgot> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Gmail Password Reset",
+          "Gmail Password Resets",
           style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
