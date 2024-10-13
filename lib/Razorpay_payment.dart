@@ -94,7 +94,7 @@ class _PaymentPageState extends State<PaymentPage> {
             TextField(
               controller: _nameController,
               decoration: InputDecoration(
-                labelText: 'Enter Name',
+                labelText: 'Enter Names',
                 border: OutlineInputBorder(),
               ),
             ),
