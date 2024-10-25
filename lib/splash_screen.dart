@@ -20,10 +20,12 @@ class _SplashScreenState extends State<SplashScreen> {
       User? user = FirebaseAuth.instance.currentUser;
       if (user != null && user.emailVerified) {
         // User is logged in and email is verified
-        Navigator.pushReplacementNamed(context, '/firsthome');  // Replace '/home' with your main screen
+        Navigator.pushReplacementNamed(
+            context, '/firsthome'); // Replace '/home' with your main screen
       } else {
         // User is not logged in or email not verified, go to login
-        Navigator.pushReplacementNamed(context, '/SecondOne'); // Go to login screen
+        Navigator.pushReplacementNamed(
+            context, '/SecondOne'); // Go to login screen
       }
     });
   }
@@ -37,7 +39,7 @@ class _SplashScreenState extends State<SplashScreen> {
           children: [
             // Your app logo
             Image.asset(
-              'assets/logo.jpg', // Replace with your app logo asset
+              '', // Replace with your app logo asset
               width: 400,
               height: 400,
             ),
