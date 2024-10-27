@@ -1,5 +1,6 @@
 // import 'package:firebase/homeone.dart';
 // import 'package:firebase/homeone.dart';/
+import 'package:firebase/homeone.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -54,11 +55,11 @@ class _firsthomeState extends State<firsthome> {
                   color: Colors.white,
                 ),
                 label: Text(''),
-                onPressed: () {},
-                //   Navigator.push(context, MaterialPageRoute(builder: (context) {
-                //     return SecondOne();
-                //   }));
-                // },
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return SecondOne();
+                  }));
+                },
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Color.fromARGB(255, 248, 248, 248),
                   shadowColor: Color.fromARGB(29, 29, 29, 29),
