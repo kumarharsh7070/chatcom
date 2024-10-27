@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase/cha_page.dart'; // Adjust this import path as needed
+import 'package:firebase/chat_page.dart'; // Adjust this import path as needed
 import 'package:firebase/gmail_forget.dart';
 import 'package:firebase/models/usermodel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -85,20 +85,19 @@ class _GmailAuthState extends State<GmailAuth> {
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(height: screenHeight * 0.03),
-        
+
                   // Social buttons
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       socialButton(FontAwesomeIcons.facebook),
-                      
                     ],
                   ),
-        
+
                   SizedBox(height: screenHeight * 0.02),
                   DividerWithText(),
                   SizedBox(height: screenHeight * 0.03),
-        
+
                   // Email text field with icon
                   buildTextField(
                     label: "Your Email",
@@ -116,9 +115,9 @@ class _GmailAuthState extends State<GmailAuth> {
                     },
                     icon: Icons.email,
                   ),
-        
+
                   SizedBox(height: screenHeight * 0.02),
-        
+
                   // Password text field with visibility toggle and icon
                   buildTextField(
                     label: "Password",
@@ -144,9 +143,9 @@ class _GmailAuthState extends State<GmailAuth> {
                     },
                     icon: Icons.lock,
                   ),
-        
+
                   SizedBox(height: screenHeight * 0.04),
-        
+
                   // Login Button
                   ElevatedButton(
                     onPressed: checkValues,
@@ -162,14 +161,15 @@ class _GmailAuthState extends State<GmailAuth> {
                           fontSize: 18),
                     ),
                   ),
-        
+
                   SizedBox(height: screenHeight * 0.02),
-        
+
                   // Forgot Password Button
                   CupertinoButton(
                     child: Text("Forgot Password?"),
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
                         return GmailForgot();
                       }));
                     },

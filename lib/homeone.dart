@@ -1,13 +1,10 @@
-// import 'package:firebase/gmail_auth.dart';
-// import 'package:firebase/gmail_register.dart';
 import 'package:firebase/Razorpay_payment.dart';
-// import 'package:firebase/cha_page.dart';
+import 'package:firebase/chat_page.dart';
 import 'package:firebase/gmail_auth.dart';
 import 'package:firebase/gmail_register.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-// import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -19,7 +16,6 @@ class SecondOne extends StatefulWidget {
 }
 
 class _SecondOneState extends State<SecondOne> {
-  // Google Sign-In function
   Future<void> login() async {
     try {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
@@ -31,10 +27,17 @@ class _SecondOneState extends State<SecondOne> {
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
+
       UserCredential userCredential =
           await FirebaseAuth.instance.signInWithCredential(credential);
       User? user = userCredential.user;
       print('Signed in as ${user?.displayName} (${user?.email})');
+
+      // Redirect to chatpage after successful login
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => ChatPage()),
+      );
     } catch (e) {
       print('Error during Google Sign-In: $e');
     }

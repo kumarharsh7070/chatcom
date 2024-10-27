@@ -3,7 +3,7 @@ import 'package:firebase/Pages/Message_Page.dart';
 import 'package:firebase/Pages/Status_Page.dart';
 import 'package:firebase/Pages/call_page.dart';
 import 'package:firebase/Razorpay_payment.dart';
-import 'package:firebase/cha_page.dart';
+import 'package:firebase/chat_page.dart';
 import 'package:firebase/firebase_options.dart';
 import 'package:firebase/first_home.dart';
 import 'package:firebase/gmail_auth.dart';
