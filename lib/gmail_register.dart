@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase/CompleteProfileScreen.dart';  // Adjust this import path as needed
+import 'package:firebase/CompleteProfileScreen.dart'; // Adjust this import path as needed
 
 class GmailRegister extends StatefulWidget {
   @override
@@ -69,7 +69,7 @@ class _GmailRegisterState extends State<GmailRegister> {
           MaterialPageRoute(
             builder: (context) => EmailVerificationScreen(
               email: email,
-              password: password,  // Pass the password to allow re-login
+              password: password, // Pass the password to allow re-login
             ),
           ),
         );
@@ -228,7 +228,8 @@ class _GmailRegisterState extends State<GmailRegister> {
 // EmailVerificationScreen to wait for verification
 class EmailVerificationScreen extends StatefulWidget {
   final String email;
-  final String password;  // Accept password for re-login after email verification
+  final String
+      password; // Accept password for re-login after email verification
 
   EmailVerificationScreen({required this.email, required this.password});
 
@@ -239,9 +240,33 @@ class EmailVerificationScreen extends StatefulWidget {
 
 class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
   bool _isVerifying = false;
+  void _showVerificationDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title:
+              Text('Email Verification', style: TextStyle(color: Colors.green)),
+          content: Text(
+              'A verification link has been sent to ${widget.email}. Please check your email.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _showVerificationDialog();
+    });
     return Scaffold(
       appBar: AppBar(title: Text('Verify your email')),
       body: Center(
@@ -269,13 +294,14 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                                 email: widget.email, password: widget.password);
 
                         User? user = userCredential.user;
-                        await user!.reload();  // Reload user info
+                        await user!.reload(); // Reload user info
 
                         if (user.emailVerified) {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => ProfileCompletion(uid: user.uid),
+                              builder: (context) =>
+                                  ProfileCompletion(uid: user.uid),
                             ),
                           );
                         } else {

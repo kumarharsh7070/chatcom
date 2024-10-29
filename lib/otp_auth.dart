@@ -26,11 +26,9 @@ class _PhoneAuthState extends State<PhoneAuth> {
     await FirebaseAuth.instance.verifyPhoneNumber(
       phoneNumber: '${countryCodeController.text}${phoneController.text}',
       verificationCompleted: (PhoneAuthCredential credential) async {
-        // Auto sign-in
         await FirebaseAuth.instance.signInWithCredential(credential);
       },
       verificationFailed: (FirebaseAuthException e) {
-        // Handle error
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Verification failed. ${e.message}')),
         );
@@ -53,9 +51,7 @@ class _PhoneAuthState extends State<PhoneAuth> {
 
     try {
       await FirebaseAuth.instance.signInWithCredential(credential);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Phone number verified successfully!')),
-      );
+      showVerificationDialog(); // Show the verification dialog on success
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Invalid OTP. Please try again.')),
@@ -63,69 +59,96 @@ class _PhoneAuthState extends State<PhoneAuth> {
     }
   }
 
+  void showVerificationDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('OTP Verified!', style: TextStyle(color: Colors.green)),
+          content: Text('Your phone number has been successfully verified.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            Image.asset('assets/undraw1.png', width: 480, height: 390),
-            Text('Registration', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30)),
-            SizedBox(height: 20),
-            Text("Add your phone number, we'll send a verification code.", style: TextStyle(fontSize: 12)),
-            SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: 60,
-                  child: TextField(
-                    controller: countryCodeController,
-                    keyboardType: TextInputType.phone,
-                    decoration: InputDecoration(
-                      labelText: 'Code',
-                      enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.black)),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              Image.asset('assets/undraw1.png', width: 480, height: 390),
+              Text('Registration',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30)),
+              SizedBox(height: 20),
+              Text("Add your phone number, we'll send a verification code.",
+                  style: TextStyle(fontSize: 12)),
+              SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: 60,
+                    child: TextField(
+                      controller: countryCodeController,
+                      keyboardType: TextInputType.phone,
+                      decoration: InputDecoration(
+                        labelText: 'Code',
+                        enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black)),
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(width: 10),
-                Expanded(
-                  child: TextField(
-                    controller: phoneController,
-                    keyboardType: TextInputType.phone,
-                    decoration: InputDecoration(
-                      labelText: 'Phone Number',
-                      enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.black)),
+                  SizedBox(width: 10),
+                  Expanded(
+                    child: TextField(
+                      controller: phoneController,
+                      keyboardType: TextInputType.phone,
+                      decoration: InputDecoration(
+                        labelText: 'Phone Number',
+                        enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black)),
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-            SizedBox(height: 20),
-            otpSent
-                ? Column(
-                    children: [
-                      TextField(
-                        controller: otpController,
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          labelText: 'Enter OTP',
-                          enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.black)),
+                ],
+              ),
+              SizedBox(height: 20),
+              otpSent
+                  ? Column(
+                      children: [
+                        TextField(
+                          controller: otpController,
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            labelText: 'Enter OTP',
+                            enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.black)),
+                          ),
                         ),
-                      ),
-                      SizedBox(height: 20),
-                      ElevatedButton(
-                        onPressed: signInWithOTP,
-                        child: Text('Verify OTP'),
-                      ),
-                    ],
-                  )
-                : ElevatedButton(
-                    onPressed: verifyPhone,
-                    child: Text('Send OTP'),
-                  ),
-          ],
+                        SizedBox(height: 20),
+                        ElevatedButton(
+                          onPressed: signInWithOTP,
+                          child: Text('Verify OTP'),
+                        ),
+                      ],
+                    )
+                  : ElevatedButton(
+                      onPressed: verifyPhone,
+                      child: Text('Send OTP'),
+                    ),
+            ],
+          ),
         ),
       ),
     );

@@ -15,11 +15,8 @@ class _GmailForgotState extends State<GmailForgot> {
   reset() async {
     try {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email.text);
-      // If successful, show success SnackBar
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text("Password reset link sent to ${email.text}"),
-        backgroundColor: Colors.green,
-      ));
+      // If successful, show confirmation dialog
+      _showConfirmationDialog();
     } on FirebaseAuthException catch (e) {
       // Show error SnackBar if an exception occurs
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -27,6 +24,29 @@ class _GmailForgotState extends State<GmailForgot> {
         backgroundColor: Colors.red,
       ));
     }
+  }
+
+  // Show confirmation dialog
+  void _showConfirmationDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Password Reset Link Sent',
+              style: TextStyle(color: Colors.green)),
+          content: Text(
+              'A password reset link has been sent to ${email.text}. Please check your email.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -47,8 +67,7 @@ class _GmailForgotState extends State<GmailForgot> {
       body: SafeArea(
         child: Center(
           child: Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: screenWidth * 0.08), // Responsive padding
+            padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.08),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -56,21 +75,20 @@ class _GmailForgotState extends State<GmailForgot> {
                 Text(
                   "Enter your email",
                   style: TextStyle(
-                    fontSize: screenWidth * 0.06, // Responsive font size
+                    fontSize: screenWidth * 0.06,
                     fontWeight: FontWeight.bold,
                     color: Colors.black87,
                   ),
                 ),
-                SizedBox(
-                    height: screenHeight * 0.03), // Responsive vertical spacing
+                SizedBox(height: screenHeight * 0.03),
 
                 // Gmail-style TextField with shadow
                 Container(
                   decoration: BoxDecoration(
                     boxShadow: [
                       BoxShadow(
-                        color: Color.fromARGB(255, 10, 10, 159)
-                            .withOpacity(0.1), // subtle shadow
+                        color:
+                            Color.fromARGB(255, 10, 10, 159).withOpacity(0.1),
                         spreadRadius: 2,
                         blurRadius: 5,
                         offset: Offset(0, 3),
@@ -83,36 +101,30 @@ class _GmailForgotState extends State<GmailForgot> {
                     decoration: InputDecoration(
                       hintText: "youremail@gmail.com",
                       filled: true,
-                      fillColor: Colors.grey[100], // Light fill color
-                      prefixIcon:
-                          Icon(Icons.email, color: Colors.grey), // Email icon
+                      fillColor: Colors.grey[100],
+                      prefixIcon: Icon(Icons.email, color: Colors.grey),
                       contentPadding: EdgeInsets.symmetric(
-                        vertical: screenHeight * 0.025, // Responsive padding
+                        vertical: screenHeight * 0.025,
                         horizontal: screenWidth * 0.05,
                       ),
                       enabledBorder: OutlineInputBorder(
-                        borderRadius:
-                            BorderRadius.circular(10), // Rounded corners
+                        borderRadius: BorderRadius.circular(10),
                         borderSide: BorderSide(color: Colors.grey[300]!),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide(
-                            color: Colors.blueAccent,
-                            width: 2), // Highlight when focused
+                        borderSide:
+                            BorderSide(color: Colors.blueAccent, width: 2),
                       ),
                     ),
                   ),
                 ),
-                SizedBox(
-                    height: screenHeight * 0.07), // Responsive vertical spacing
+                SizedBox(height: screenHeight * 0.07),
 
                 // "Send Link" Button
                 SizedBox(
-                  width:
-                      screenWidth * 0.8, // Button width as 80% of screen width
-                  height: screenHeight *
-                      0.07, // Button height as 7% of screen height
+                  width: screenWidth * 0.8,
+                  height: screenHeight * 0.07,
                   child: ElevatedButton(
                     onPressed: () {
                       reset(); // Call the reset function
@@ -126,7 +138,7 @@ class _GmailForgotState extends State<GmailForgot> {
                     child: Text(
                       "Send Link",
                       style: TextStyle(
-                        fontSize: screenWidth * 0.05, // Responsive font size
+                        fontSize: screenWidth * 0.05,
                         color: Colors.white,
                       ),
                     ),

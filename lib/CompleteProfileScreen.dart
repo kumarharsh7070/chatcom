@@ -4,7 +4,6 @@ import 'package:firebase/chat_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-// import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:firebase/models/usermodel.dart';
@@ -45,7 +44,39 @@ class _ProfileCompletionState extends State<ProfileCompletion> {
     }
   }
 
-  Future<void> _pickImage(ImageSource source) async {
+  Future<void> _pickImage() async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Select Image Source'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                leading: Icon(Icons.camera),
+                title: Text('Camera'),
+                onTap: () async {
+                  Navigator.of(context).pop();
+                  await _pickImageFromSource(ImageSource.camera);
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.photo),
+                title: Text('Gallery'),
+                onTap: () async {
+                  Navigator.of(context).pop();
+                  await _pickImageFromSource(ImageSource.gallery);
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> _pickImageFromSource(ImageSource source) async {
     try {
       final ImagePicker _picker = ImagePicker();
       final XFile? image = await _picker.pickImage(source: source);
@@ -73,7 +104,6 @@ class _ProfileCompletionState extends State<ProfileCompletion> {
     return null;
   }
 
-  // Save profile info to Firestore
   void saveProfile() async {
     String fullName = fullNameController.text.trim();
     if (fullName == "" || _profileImage == null) {
@@ -102,18 +132,36 @@ class _ProfileCompletionState extends State<ProfileCompletion> {
         .doc(widget.uid)
         .set(newUser.toMap());
 
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text("Profile saved successfully!"),
-      backgroundColor: Colors.green,
-    ));
-
     setState(() {
       _isUploading = false;
     });
 
+    _showCompletionDialog(); // Show completion dialog
+
     Navigator.push(context, MaterialPageRoute(builder: (context) {
       return ChatPage();
     }));
+  }
+
+  void _showCompletionDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title:
+              Text('Profile Complete!', style: TextStyle(color: Colors.green)),
+          content: Text('Your profile has been successfully completed.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -189,7 +237,7 @@ class _ProfileCompletionState extends State<ProfileCompletion> {
     return Column(
       children: [
         GestureDetector(
-          onTap: () => _pickImage(ImageSource.gallery),
+          onTap: _pickImage, // Call the new method here
           child: CircleAvatar(
             radius: screenWidth * 0.15,
             backgroundImage:
@@ -205,9 +253,9 @@ class _ProfileCompletionState extends State<ProfileCompletion> {
         ),
         SizedBox(height: screenHeight * 0.02),
         TextButton(
-          onPressed: () => _pickImage(ImageSource.camera),
+          onPressed: () => _pickImage(), // Use the new method
           child: Text(
-            "Take a picture",
+            "Change Picture",
             style: TextStyle(
               color: Color(0xFF24786D),
               fontSize: screenWidth * 0.04,
