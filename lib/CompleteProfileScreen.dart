@@ -22,28 +22,45 @@ class _ProfileCompletionState extends State<ProfileCompletion> {
   bool _isUploading = false;
   String? _imageUrl;
 
+  // Upload image to Firebase Storage
   Future<void> _uploadImage() async {
+    if (_profileImage == null) return;
+
     try {
+      // Generate a unique file name based on the current time
       String fileName = DateTime.now().millisecondsSinceEpoch.toString();
       Reference firebaseStorageRef =
           FirebaseStorage.instance.ref().child('profile_images/$fileName');
 
+      // Upload the image
       UploadTask uploadTask = firebaseStorageRef.putFile(_profileImage!);
+
+      // Listen to upload progress (optional)
+      uploadTask.snapshotEvents.listen((TaskSnapshot snapshot) {
+        print(
+            'Upload progress: ${(snapshot.bytesTransferred / snapshot.totalBytes) * 100}%');
+      });
+
+      // Wait for the upload to complete and get the download URL
       TaskSnapshot taskSnapshot = await uploadTask;
       String downloadUrl = await taskSnapshot.ref.getDownloadURL();
 
       setState(() {
         _imageUrl = downloadUrl;
       });
+
+      print("Image uploaded successfully. URL: $_imageUrl");
     } catch (e) {
+      // Enhanced error handling
       print("Error uploading image: $e");
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text("Error uploading image"),
+        content: Text("Error uploading image: $e"),
         backgroundColor: Colors.red,
       ));
     }
   }
 
+  // Pick image from camera or gallery
   Future<void> _pickImage() async {
     showDialog(
       context: context,
@@ -76,6 +93,7 @@ class _ProfileCompletionState extends State<ProfileCompletion> {
     );
   }
 
+  // Pick image from the specified source (camera or gallery)
   Future<void> _pickImageFromSource(ImageSource source) async {
     try {
       final ImagePicker _picker = ImagePicker();
@@ -94,6 +112,7 @@ class _ProfileCompletionState extends State<ProfileCompletion> {
     }
   }
 
+  // Crop the selected image
   Future<File?> _cropImage(String imagePath) async {
     CroppedFile? croppedFile = await ImageCropper().cropImage(
       sourcePath: imagePath,
@@ -104,9 +123,12 @@ class _ProfileCompletionState extends State<ProfileCompletion> {
     return null;
   }
 
+  // Save the profile data (image and full name) to Firebase
   void saveProfile() async {
     String fullName = fullNameController.text.trim();
-    if (fullName == "" || _profileImage == null) {
+
+    // Validation
+    if (fullName.isEmpty || _profileImage == null) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text("Please provide all information"),
         backgroundColor: Colors.red,
@@ -118,8 +140,9 @@ class _ProfileCompletionState extends State<ProfileCompletion> {
       _isUploading = true;
     });
 
-    await _uploadImage();
+    await _uploadImage(); // Upload image
 
+    // Create a new user model with the provided data
     Usermodel newUser = Usermodel(
       uid: widget.uid,
       email: FirebaseAuth.instance.currentUser!.email!,
@@ -127,10 +150,19 @@ class _ProfileCompletionState extends State<ProfileCompletion> {
       profilepic: _imageUrl!,
     );
 
-    await FirebaseFirestore.instance
-        .collection("users")
-        .doc(widget.uid)
-        .set(newUser.toMap());
+    // Save user data to Firestore
+    try {
+      await FirebaseFirestore.instance
+          .collection("users")
+          .doc(widget.uid)
+          .set(newUser.toMap());
+    } catch (e) {
+      print("Error saving profile to Firestore: $e");
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text("Error saving profile"),
+        backgroundColor: Colors.red,
+      ));
+    }
 
     setState(() {
       _isUploading = false;
@@ -143,6 +175,7 @@ class _ProfileCompletionState extends State<ProfileCompletion> {
     }));
   }
 
+  // Show dialog after profile completion
   void _showCompletionDialog() {
     showDialog(
       context: context,
@@ -164,6 +197,7 @@ class _ProfileCompletionState extends State<ProfileCompletion> {
     );
   }
 
+  // Build the UI for profile completion
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -233,11 +267,12 @@ class _ProfileCompletionState extends State<ProfileCompletion> {
     );
   }
 
+  // Build profile image picker UI
   Widget _buildProfileImagePicker(double screenWidth, double screenHeight) {
     return Column(
       children: [
         GestureDetector(
-          onTap: _pickImage, // Call the new method here
+          onTap: _pickImage,
           child: CircleAvatar(
             radius: screenWidth * 0.15,
             backgroundImage:
@@ -253,7 +288,7 @@ class _ProfileCompletionState extends State<ProfileCompletion> {
         ),
         SizedBox(height: screenHeight * 0.02),
         TextButton(
-          onPressed: () => _pickImage(), // Use the new method
+          onPressed: _pickImage,
           child: Text(
             "Change Picture",
             style: TextStyle(

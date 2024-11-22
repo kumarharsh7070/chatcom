@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'chat_page.dart'; // Import the chat page
 
 class PhoneAuth extends StatefulWidget {
   const PhoneAuth({super.key});
@@ -70,12 +71,23 @@ class _PhoneAuthState extends State<PhoneAuth> {
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(); // Close the dialog
+                navigateToChatPage(); // Redirect to the chat page
               },
               child: Text('OK'),
             ),
           ],
         );
       },
+    );
+  }
+
+  // Method to navigate to the ChatPage
+  void navigateToChatPage() {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+          builder: (context) =>
+              ChatPage()), // Replace with your actual ChatPage widget
     );
   }
 
